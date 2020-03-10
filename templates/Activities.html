@@ -5,7 +5,7 @@
     
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style="background-image: url('https://i.imgur.com/iZvdln1.jpg'); background-size: cover;">
 
-        <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <div class="col-md-8 p-lg-8 mx-auto my-8">
         
             <h1 class="display-4 font-weight-normal">Ready for a break?</h1>
             <p class="lead font-weight-normal">we're here to make your next holiday choice a breeze</p>
@@ -41,6 +41,20 @@
                         <option >{{ i[1] }}</option>
                     {%endfor%}
                     </select>
+                <input type = "submit">
+                
+            </form>
+
+
+            <form method="POST" action="{{ url_for('Activities_update') }}"></br>
+                <label>Change Name From:</label>
+                <select name= "activ">
+                {%for i in info1%}
+                    <option >{{ i[1] }}</option>
+                {%endfor%}
+                </select></br>
+                <!-- Change Name From <input type = "text" name= "initialname" /> <br> -->
+                To <input type = "text" name= "finalname" />   
                 <input type = "submit">
                 
             </form>

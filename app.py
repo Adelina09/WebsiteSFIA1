@@ -17,7 +17,7 @@ app.config['MYSQL_DB']=os.environ['MYSQLDB']
 def home():
     return render_template('page.html', title='Home')
 
-@app.route('/Activities', methods=['GET', 'POST'])
+@app.route('/Activities', methods=['GET', 'POST']) #select and insert function
 def Activities():
 
     if request.method =='POST':
@@ -43,7 +43,7 @@ def Activities():
     return render_template("Activities.html", title='Activities', info1=info)
 
 
-@app.route('/Activities/delete', methods=['GET', 'POST'])
+@app.route('/Activities/delete', methods=['GET', 'POST']) #delete function
 def Activities_delete():
     if request.method == "POST":
         details=request.form
@@ -67,6 +67,30 @@ def Activities_delete():
     return render_template("Activities.html", title='Activities', info1=info)
 
 
+@app.route('/Activities/update', methods=['GET', 'POST']) # Update function
+def Activities_update():
+    if request.method == "POST":
+        details=request.form
+        fromname=details['activ']
+        toname=details['finalname']
+        if fromname != "" and toname != "":
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE Activity SET Name=(%s) WHERE Name=(%s)", [toname, fromname])
+            mysql.connection.commit()
+            cur.close()
+    
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * FROM Activity")
+    mysql.connection.commit()
+    rows = cur.fetchall()
+    cur.close()
+
+    
+    info=[]
+
+    for row in rows:
+        info.append(row)
+    return render_template("Activities.html", title='Activities', info1=info)
 
 
 @app.route('/Locations')
