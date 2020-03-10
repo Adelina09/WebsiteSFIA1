@@ -52,8 +52,19 @@ def Activities_delete():
         cur.execute("DELETE FROM Activity WHERE Name = (%s)", [act]) #works in GCP SQL
         mysql.connection.commit()
         cur.close()
-    return render_template("Activities.html", title='Activities')
-    # return render_template(url_for('Activities'))
+
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * FROM Activity")
+    mysql.connection.commit()
+    rows = cur.fetchall()
+    cur.close()
+
+    
+    info=[]
+
+    for row in rows:
+        info.append(row)
+    return render_template("Activities.html", title='Activities', info1=info)
 
 
 

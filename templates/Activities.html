@@ -11,30 +11,36 @@
             <p class="lead font-weight-normal">we're here to make your next holiday choice a breeze</p>
           
             <form action="" method="POST">
-                <label>Choose an activity:</label>
-                <select >
+                <label>Select an activity:</label>
+                <!-- <select multiple> -->
+                <select >    
                 {%for i in info1%}
                   <option >{{ i[1] }}</option>
                 {%endfor%}
                 </select>
     
-                <input type="submit"/>
+                <input type="submit">
             </form>
 
 
             <form method="POST" action="{{url_for('Activities')}}">
                 
-                <H1>Enter an activity </H1> <br>
-                Activity <input type = "text" name= "activ" /> <br>
+                <label>Add a new activity:</label>
+                <input type = "text" name= "activ" size="20">
                 <input type = "submit">
                 
             </form>
           
 
             <form method="POST" action="{{url_for('Activities_delete')}}">
+                <!-- Activity <input type = "text" name= "activ" /> <br> -->
                 
-                <H1>Enter an activity </H1> <br>
-                Activity <input type = "text" name= "activ" /> <br>
+                <label>Delete an activity:</label>
+                    <select name= "activ">
+                    {%for i in info1%}
+                        <option >{{ i[1] }}</option>
+                    {%endfor%}
+                    </select>
                 <input type = "submit">
                 
             </form>
