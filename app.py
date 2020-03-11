@@ -95,7 +95,22 @@ def Activities_update():
 
 @app.route('/Locations')
 def Locations():
-    return render_template('Locations.html', title='Locations')
+
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * FROM Location")
+    mysql.connection.commit()
+    rows = cur.fetchall()
+    cur.close()
+
+    
+    info=[]
+
+    for row in rows:
+        info.append(row)
+    
+    return render_template("Locations.html", title='Locations', info1=info)
+
+
 
 @app.route('/WhatNext')
 def WhatNext():
