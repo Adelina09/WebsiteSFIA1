@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 import os
 
@@ -25,6 +25,7 @@ def Activities():
         act=details['activ']
         cur=mysql.connection.cursor()
         cur.execute("INSERT INTO Activity (Name) VALUES (%s);", [act]) #works in GCP SQL
+
         mysql.connection.commit()
         cur.close()
 
@@ -93,6 +94,34 @@ def Activities_update():
     return render_template("Activities.html", title='Activities', info1=info)
 
 
+@app.route('/Activities/results', methods=['GET', 'POST']) # Results
+def Activities_results():
+    if request.method == "POST":
+        details=request.form
+        act=details['activ']
+        if act != "" :
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO Relations VALUES((Select ID FROM Activity WHERE Name='swimming'), (SELECT ID FROM Location WHERE Activity='swimming')" [act])
+            mysql.connection.commit()
+            cur.close()
+    
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * FROM Relations")
+    mysql.connection.commit()
+    rows = cur.fetchall()
+    cur.close()
+
+    
+    info=[]
+
+    for row in rows:
+        info.append(row)
+    return render_template("Activities.html", title='Activities', info1=info)
+
+
+
+
+
 @app.route('/Locations')
 def Locations():
 
@@ -117,5 +146,36 @@ def WhatNext():
     return render_template('WhatNext.html', title='What next?')
 
 
+@app.route('/Activities/display', methods =['GET','POST'])
+def Activities_display():
+    details=request.form
+    activities=details['Name']
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * from Location")
+    loc= cur.fetchall()
+    cur.close()
+    desired=[]
+    for i in range (len(loc)):
+        if activities in loc[i][4]:
+            desired.append(loc[i][1])
+        
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * FROM Activity")
+    mysql.connection.commit()
+    rows = cur.fetchall()
+    cur.close()
+
+    
+    info=[]
+
+    for row in rows:
+        info.append(row)
+    return render_template("Activities.html", title='Activities', info1=info, desired=desired)
+
+
+
 if __name__=='__main__':
     app.run('0.0.0.0',debug=True)
+
+
+

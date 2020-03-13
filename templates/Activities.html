@@ -10,17 +10,7 @@
             <h1 class="display-4 font-weight-normal">Ready for a break?</h1>
             <p class="lead font-weight-normal">we're here to make your next holiday choice a breeze</p>
           
-            <form action="" method="POST">
-                <label>Select an activity:</label>
-                <!-- <select multiple> -->
-                <select >    
-                {%for i in info1%}
-                  <option >{{ i[1] }}</option>
-                {%endfor%}
-                </select>
-    
-                <input type="submit">
-            </form>
+
 
 
             <form method="POST" action="{{url_for('Activities')}}">
@@ -61,4 +51,57 @@
         </div>
         </div>
     
+<h2>Results:</h2>
+<form action="{{ url_for('Activities_display') }}" method="POST">
+    <label>Select an activity:</label>
+    <!-- <select multiple> -->
+    <select name="Name" multiple>    
+    {%for i in info1%}
+      <option value="{{ i[1] }}">{{ i[1] }}</option>
+    {%endfor%}
+    </select>
+
+    <input type="submit">
+</form>
+
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 70%;
+      
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
+    </head>
+    <body>
+    
+  
+    <h2 align = "center">Locations</h2>
+    
+    <table align="center">
+      <col width=10%>
+      <col width=20%>
+      <col width=10%>
+      
+      <tr>
+        <th>Desired</th>
+      </tr>
+      
+      {%for i in desired %}
+      <tr>
+        <td> <a href="/Locations">{{ i }} </a></td>
+      </tr>
+      {% endfor %}
+
+
     {%endblock%}
