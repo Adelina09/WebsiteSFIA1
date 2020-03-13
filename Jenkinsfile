@@ -3,8 +3,9 @@ pipeline{
     stages{
         stage('Development Environment'){
             steps{
-                sh 'echo "Hello world"'
-                sh 'touch Adelina.txt'
+                sh 'chmod 775 ./script/*'
+                sh './script/before_installation.sh'
+                sh './script/installation.sh'
             }
         }
     }
