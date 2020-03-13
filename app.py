@@ -119,33 +119,6 @@ def Activities_results():
     return render_template("Activities.html", title='Activities', info1=info)
 
 
-
-
-
-@app.route('/Locations')
-def Locations():
-
-    cur=mysql.connection.cursor()
-    cur.execute("SELECT * FROM Location")
-    mysql.connection.commit()
-    rows = cur.fetchall()
-    cur.close()
-
-    
-    info=[]
-
-    for row in rows:
-        info.append(row)
-    
-    return render_template("Locations.html", title='Locations', info1=info)
-
-
-
-@app.route('/WhatNext')
-def WhatNext():
-    return render_template('WhatNext.html', title='What next?')
-
-
 @app.route('/Activities/display', methods =['GET','POST'])
 def Activities_display():
     details=request.form
@@ -171,6 +144,31 @@ def Activities_display():
     for row in rows:
         info.append(row)
     return render_template("Activities.html", title='Activities', info1=info, desired=desired)
+
+
+@app.route('/Locations')
+def Locations():
+
+    cur=mysql.connection.cursor()
+    cur.execute("SELECT * FROM Location")
+    mysql.connection.commit()
+    rows = cur.fetchall()
+    cur.close()
+
+    
+    info=[]
+
+    for row in rows:
+        info.append(row)
+    
+    return render_template("Locations.html", title='Locations', info1=info)
+
+
+
+@app.route('/WhatNext')
+def WhatNext():
+    return render_template('WhatNext.html', title='What next?')
+
 
 
 
