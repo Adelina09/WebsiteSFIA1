@@ -5,7 +5,7 @@ pipeline{
             steps{
                 sh 'chmod 775 ./script/*'
                 sh './script/before_installation.sh'
-                sh './script/installation.sh'
+                sh './script/make_service.sh'
             }
         }
     }
